@@ -8,20 +8,14 @@ import {Subject} from "rxjs";
 export class RecipeService {
   recipeChanged = new Subject<Recipe[]>();
 
-  private recipes: Recipe[] = [
-    new Recipe('Test Recipe 1', 'hfjdsk fhdjsk fhdjsk fhdsjk', 'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&webp=true&resize=300,272',
-      [
-        new Ingredient('Meat', 1),
-        new Ingredient('Bread', 1),
-      ]),
-    new Recipe('Test Recipe 2', 'bla bla bla', 'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&webp=true&resize=300,272',
-      [
-        new Ingredient('Meat', 1),
-        new Ingredient('Bread', 1),
-      ]),
-  ];
+  private recipes: Recipe[] = [];
 
   constructor(private shoppingList: ShoppingListService) { }
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipeChanged.next(this.recipes.slice());
+  }
 
   getRecipes() {
     return this.recipes.slice();
